@@ -1,0 +1,103 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr"> 
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+        <title></title> 
+        
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    </head> 
+    <body>
+
+    	<button id="btn">Ajouter</button>
+
+		<div id="addlist">
+			
+		</div>
+
+     <script type="text/javascript">
+     	function paste(e) {
+     		console.log(e);
+			var ClipboardContent = e.clipboardData && e.clipboardData.getData ? 
+					e.clipboardData.getData('Text'):                // Standard
+			        window.clipboardData && window.clipboardData.getData ?	        
+			        window.clipboardData.getData('Text') :                 // MS
+			        false;
+
+
+			    Clipboardlines = ClipboardContent.split(String.fromCharCode(13));
+			    for (i=0; i<Clipboardlines.length; i++) {
+			    	Clipboardlines[i] = Clipboardlines[i].split(String.fromCharCode(9));
+			    }
+
+			    newTable = document.createElement("table");
+			    newTable.border = 1;
+			    for (i=0; i<Clipboardlines.length - 1; i++) {
+			    	newRow = newTable.insertRow();
+			    	for (j=0; j<Clipboardlines[i].length; j++) {
+			    		newCell = newRow.insertCell();
+			    		if (Clipboardlines[i][j].length == 0) {
+			    			newCell.innerText = ' ';
+			    		}
+			    		else {
+			    			newCell.innerText = Clipboardlines[i][j];
+			    		}
+			    	}
+			    }
+			    document.body.appendChild(newTable);
+			    $('#addlist').html(newTable);
+			}
+
+
+			//var test = document.addEventListener('paste', function (evt) {
+			//var test = document.addEventListener('paste', function (evt) {
+				document.body.onpaste = function(evt) {
+				alert("test");
+			  	paste(evt);
+			  	evt.preventDefault();
+
+			  	// $("#btn").addEventListener('click',function(){
+			  	// 	alert("est'");
+			  	// 	paste(evt);
+			  	// });
+					};
+
+			
+
+			$("#btn").click(function(e){
+				var test= document.body.onpaste;
+				document.dispatchEvent(document.body.onpaste);
+				alert( test);
+
+		// 		//var e = document.execCommand('paste');
+		// 		//paste(window.clipboardData);
+		// 		 // if (window.netscape && netscape.security) {
+  //    //                    netscape.security.PrivilegeManager.enablePrivilege ("UniversalXPConnect");
+  //    //                }
+		// 		 // document.execCommand('paste');
+		// 		 // 
+		// 		//  var pasteEvent = new ClipboardEvent(test);
+		// 		// //pasteEvent.clipboardData.items.add('My string', 'text/plain');
+		// 		// document.dispatchEvent(pasteEvent);
+				
+	
+		// try {
+		// 		// Now that we've selected the anchor text, execute the copy command  
+		// 		var successful = document.execCommand('paste');
+		// 		var msg = successful ? 'successful' : 'unsuccessful';
+		// 		console.log('Paste command was ' + msg);
+		// } catch (err) {
+		// 		console.log('Oops, unable to copy');
+		// }
+
+			});
+     </script>
+
+    </body> 
+    
+
+
+</html>
+                                
